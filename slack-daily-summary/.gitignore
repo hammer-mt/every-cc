@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Generated output
+output/

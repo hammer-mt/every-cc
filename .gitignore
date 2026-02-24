@@ -4,11 +4,7 @@ Thumbs.db
 *.swo
 *~
 
-# Dependencies
-node_modules/
-
-# Environment variables
-.env
-
-# Generated output
+# Slack Daily Summary
+slack-daily-summary/node_modules/
 slack-daily-summary/output/
+slack-daily-summary/.env
