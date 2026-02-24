@@ -1,0 +1,17 @@
+{
+  "name": "slack-daily-summary",
+  "version": "1.0.0",
+  "description": "Automatische dagelijkse samenvatting van Slack berichten met AI-categorisatie",
+  "private": true,
+  "scripts": {
+    "summary": "node slack-daily-summary/generate-summary.js",
+    "summary:dry": "node slack-daily-summary/generate-summary.js --dry-run",
+    "summary:notion": "node slack-daily-summary/generate-summary.js --notion"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@notionhq/client": "^2.2.0",
+    "@slack/web-api": "^7.8.0",
+    "dotenv": "^16.4.0"
+  }
+}

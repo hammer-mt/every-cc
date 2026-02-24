@@ -3,3 +3,12 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Generated output
+slack-daily-summary/output/
