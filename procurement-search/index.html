@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TenderScope — Find High-Value Procurement & Tenders Worldwide</title>
+  <meta name="description" content="Search government and commercial tenders over $1M across Ukraine, EU, and 50+ countries. Built for creative agencies hunting big contracts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0e1a;
+      --bg-card: #131828;
+      --bg-card-hover: #1a2035;
+      --accent: #4f8cff;
+      --accent-hover: #6ea0ff;
+      --accent-glow: rgba(79, 140, 255, 0.15);
+      --green: #34d399;
+      --green-bg: rgba(52, 211, 153, 0.1);
+      --orange: #f59e0b;
+      --orange-bg: rgba(245, 158, 11, 0.1);
+      --red: #f87171;
+      --text: #b0bec5;
+      --text-light: #64748b;
+      --text-white: #e8edf5;
+      --border: #1e2a42;
+      --font-serif: 'DM Serif Display', 'Georgia', serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(10, 14, 26, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--text-white);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .header-nav a {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover { color: var(--text-white); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(79, 140, 255, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-glow);
+      color: var(--accent-hover);
+    }
+
+    .btn-sm {
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 100px 32px 80px;
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(79, 140, 255, 0.25);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: 58px;
+      font-weight: 400;
+      color: var(--text-white);
+      margin-bottom: 24px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 19px;
+      color: var(--text);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: -1px;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== SEARCH DEMO ===== */
+    .search-demo {
+      padding: 0 32px 100px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .search-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--green), var(--orange));
+    }
+
+    .search-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .search-header span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .search-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .search-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .search-dots span:nth-child(1) { background: #ff5f57; }
+    .search-dots span:nth-child(2) { background: #febc2e; }
+    .search-dots span:nth-child(3) { background: #28c840; }
+
+    .search-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(79, 140, 255, 0.08);
+      border: 1px solid rgba(79, 140, 255, 0.2);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .filter-tag.green {
+      background: var(--green-bg);
+      border-color: rgba(52, 211, 153, 0.2);
+      color: var(--green);
+    }
+
+    .filter-tag.orange {
+      background: var(--orange-bg);
+      border-color: rgba(245, 158, 11, 0.2);
+      color: var(--orange);
+    }
+
+    .search-input-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-white);
+      font-size: 15px;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-light);
+    }
+
+    .search-results {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .search-result:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(79, 140, 255, 0.2);
+    }
+
+    .result-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .result-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-white);
+    }
+
+    .result-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .result-flag {
+      font-size: 14px;
+    }
+
+    .result-amount {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .result-deadline {
+      font-size: 12px;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .result-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    /* ===== SECTION STYLES ===== */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 42px;
+      color: var(--text-white);
+      margin-bottom: 20px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    .section-header-center {
+      text-align: center;
+    }
+
+    .section-header-center .section-subtitle {
+      margin: 0 auto;
+    }
+
+    /* ===== PROBLEM ===== */
+    .problem {
+      border-top: 1px solid var(--border);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .problem-card {
+      padding: 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: all 0.3s;
+    }
+
+    .problem-card:hover {
+      border-color: rgba(79, 140, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .problem-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .problem-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ===== SOURCES ===== */
+    .sources {
+      border-top: 1px solid var(--border);
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .source-card {
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .source-card:hover {
+      border-color: rgba(79, 140, 255, 0.2);
+    }
+
+    .source-flag {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .source-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .source-desc {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .source-count {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      border-top: 1px solid var(--border);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex;
+      gap: 20px;
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(79, 140, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .feature-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: rgba(79, 140, 255, 0.15);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(79, 140, 255, 0.02) 0%, transparent 100%);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      position: relative;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-glow);
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 auto 24px;
+    }
+
+    .step h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    /* ===== FOR WHO ===== */
+    .for-who {
+      border-top: 1px solid var(--border);
+    }
+
+    .for-who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .for-who-card {
+      padding: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: all 0.3s;
+    }
+
+    .for-who-card:hover {
+      border-color: rgba(79, 140, 255, 0.2);
+    }
+
+    .for-who-card .emoji {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    .for-who-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+
+    .for-who-card p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing {
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      padding: 40px 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(79, 140, 255, 0.1);
+    }
+
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 8px;
+    }
+
+    .pricing-price {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 4px;
+      letter-spacing: -1px;
+    }
+
+    .pricing-price span {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ===== CTA ===== */
+    .cta {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 100px 32px;
+    }
+
+    .cta h2 {
+      font-family: var(--font-serif);
+      font-size: 42px;
+      color: var(--text-white);
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: var(--text);
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .faq-question h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-white);
+    }
+
+    .faq-toggle {
+      font-size: 20px;
+      color: var(--text-light);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer p {
+      padding-bottom: 24px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-white);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero h1 { font-size: 40px; }
+      .hero { padding: 70px 24px 60px; }
+      .hero-stats { gap: 32px; }
+      .hero-stat-num { font-size: 28px; }
+      .problem-grid, .steps, .for-who-grid { grid-template-columns: 1fr; gap: 16px; }
+      .sources-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .section-title { font-size: 32px; }
+      .header-nav a:not(.btn) { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .sources-grid { grid-template-columns: 1fr 1fr; }
+      .search-input-row { flex-direction: column; }
+      .search-filters { gap: 6px; }
+      .container { padding: 0 20px; }
+      section { padding: 64px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">T</div>
+        TenderScope
+      </div>
+      <nav class="header-nav">
+        <a href="#features">Features</a>
+        <a href="#sources">Sources</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#cta" class="btn btn-primary btn-sm">Get Early Access</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Live data from 50+ countries</div>
+    <h1>Find <span class="highlight">high-value tenders</span> before your competitors do</h1>
+    <p>One search across ProZorro, EU TED, World Bank, and 50+ procurement platforms. Filter by industry, budget, and country. Never miss a $1M+ contract again.</p>
+    <div class="hero-cta">
+      <a href="#cta" class="btn btn-primary">Start Free Trial</a>
+      <a href="#demo" class="btn btn-outline">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">12,400+</div>
+        <div class="hero-stat-label">Active tenders</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">54</div>
+        <div class="hero-stat-label">Countries</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">$2.8B+</div>
+        <div class="hero-stat-label">Total value tracked</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1M+</div>
+        <div class="hero-stat-label">Min. budget filter</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH DEMO -->
+  <div id="demo" class="search-demo fade-in">
+    <div class="search-box">
+      <div class="search-header">
+        <div class="search-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span>Live Search Preview</span>
+      </div>
+      <div class="search-filters">
+        <span class="filter-tag">Industry: Branding & Creative</span>
+        <span class="filter-tag green">Budget: > $1,000,000</span>
+        <span class="filter-tag orange">Deadline: Next 30 days</span>
+      </div>
+      <div class="search-input-row">
+        <input type="text" class="search-input" placeholder="Search tenders: branding, design, creative services, advertising..." value="creative agency services">
+        <button class="btn btn-primary">Search</button>
+      </div>
+      <div class="search-results">
+        <div class="search-result">
+          <div class="result-left">
+            <div class="result-title">National Rebranding Campaign for Ministry of Culture</div>
+            <div class="result-meta">
+              <span class="result-flag">&#127482;&#127462;</span>
+              <span>ProZorro</span>
+              <span>|</span>
+              <span>CPV: 79340000</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-amount">$2,400,000</div>
+            <div class="result-deadline">Closes Mar 12</div>
+          </div>
+        </div>
+        <div class="search-result">
+          <div class="result-left">
+            <div class="result-title">EU Communication & Visual Identity Services Framework</div>
+            <div class="result-meta">
+              <span class="result-flag">&#127466;&#127482;</span>
+              <span>TED</span>
+              <span>|</span>
+              <span>Lot 3: Creative & Design</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-amount">&#8364;4,800,000</div>
+            <div class="result-deadline">Closes Mar 28</div>
+          </div>
+        </div>
+        <div class="search-result">
+          <div class="result-left">
+            <div class="result-title">Digital Campaign & Brand Strategy for World Bank Group</div>
+            <div class="result-meta">
+              <span class="result-flag">&#127468;&#127463;</span>
+              <span>DCIPC</span>
+              <span>|</span>
+              <span>RFP-2026-0342</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-amount">$1,200,000</div>
+            <div class="result-deadline">Closes Apr 5</div>
+          </div>
+        </div>
+        <div class="search-result">
+          <div class="result-left">
+            <div class="result-title">Advertising & Media Planning for National Tourism Board</div>
+            <div class="result-meta">
+              <span class="result-flag">&#127477;&#127473;</span>
+              <span>UZP</span>
+              <span>|</span>
+              <span>BZP-2026/S-451</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-amount">&#8364;3,100,000</div>
+            <div class="result-deadline">Closes Apr 18</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">The Problem</div>
+        <h2 class="section-title">Finding the right tenders is a full-time job</h2>
+        <p class="section-subtitle">Creative agencies waste hours every day browsing dozens of procurement portals in different languages, formats, and systems.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card fade-in">
+          <div class="problem-icon" style="background: rgba(248, 113, 113, 0.1);">&#128373;</div>
+          <h3>Scattered across platforms</h3>
+          <p>ProZorro, TED, UNGM, EBRD, national portals... each with its own interface, filters, and registration. You need 15 tabs open just to start searching.</p>
+        </div>
+        <div class="problem-card fade-in">
+          <div class="problem-icon" style="background: rgba(245, 158, 11, 0.1);">&#127760;</div>
+          <h3>Language barriers</h3>
+          <p>International tenders are published in local languages. A $5M creative tender in Poland or Germany is invisible if you don't read Polish or German.</p>
+        </div>
+        <div class="problem-card fade-in">
+          <div class="problem-icon" style="background: rgba(79, 140, 255, 0.1);">&#9203;</div>
+          <h3>Missed deadlines</h3>
+          <p>By the time you find a perfect tender, the deadline already passed yesterday. Without real-time alerts, you're always one step behind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section id="sources" class="sources">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">Data Sources</div>
+        <h2 class="section-title">One search. 50+ countries.</h2>
+        <p class="section-subtitle">We aggregate tenders from the biggest public procurement platforms in real time.</p>
+      </div>
+      <div class="sources-grid fade-in">
+        <div class="source-card">
+          <div class="source-flag">&#127482;&#127462;</div>
+          <div class="source-name">ProZorro</div>
+          <div class="source-desc">Ukraine</div>
+          <div class="source-count">4,200+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127466;&#127482;</div>
+          <div class="source-name">TED (Tenders Electronic Daily)</div>
+          <div class="source-desc">European Union — 27 countries</div>
+          <div class="source-count">3,800+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127482;&#127475;</div>
+          <div class="source-name">UNGM</div>
+          <div class="source-desc">United Nations Global Marketplace</div>
+          <div class="source-count">900+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127758;</div>
+          <div class="source-name">World Bank</div>
+          <div class="source-desc">International development projects</div>
+          <div class="source-count">650+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127468;&#127463;</div>
+          <div class="source-name">Find a Tender (UK)</div>
+          <div class="source-desc">United Kingdom</div>
+          <div class="source-count">1,100+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127477;&#127473;</div>
+          <div class="source-name">UZP / BZP</div>
+          <div class="source-desc">Poland</div>
+          <div class="source-count">800+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127465;&#127466;</div>
+          <div class="source-name">DTVP</div>
+          <div class="source-desc">Germany</div>
+          <div class="source-count">700+ active</div>
+        </div>
+        <div class="source-card">
+          <div class="source-flag">&#127467;&#127479;</div>
+          <div class="source-name">BOAMP / PLACE</div>
+          <div class="source-desc">France</div>
+          <div class="source-count">600+ active</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">Features</div>
+        <h2 class="section-title">Built for agencies that think big</h2>
+        <p class="section-subtitle">Everything you need to find, track, and win high-value procurement contracts worldwide.</p>
+      </div>
+      <div class="features-grid fade-in">
+        <div class="feature-card">
+          <div class="feature-num">01</div>
+          <div>
+            <h3>Smart Keyword Search</h3>
+            <p>Search across all platforms in one place. Our AI understands synonyms and translates your query into 20+ languages to find matches you'd never discover manually.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">02</div>
+          <div>
+            <h3>Budget Filters</h3>
+            <p>Set your minimum threshold — $500K, $1M, $5M — and only see tenders worth your team's time. Filter by currency and get auto-converted amounts.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">03</div>
+          <div>
+            <h3>Daily Alerts</h3>
+            <p>Get a Telegram or email digest every morning with new tenders matching your criteria. Be the first to know, not the last to apply.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">04</div>
+          <div>
+            <h3>Auto-Translate</h3>
+            <p>Every tender description, requirement, and document is automatically translated to your language. Read Polish tenders in English or Ukrainian — seamlessly.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">05</div>
+          <div>
+            <h3>Industry Categories</h3>
+            <p>Filter by CPV codes relevant to creative work: branding, advertising, media, web development, video production, event management, and more.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">06</div>
+          <div>
+            <h3>Deadline Tracker</h3>
+            <p>Never miss a submission window. Visual calendar view, countdown timers, and reminder notifications keep your bid pipeline organized.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="how-it-works">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">From search to submission in 3 steps</h2>
+      </div>
+      <div class="steps fade-in">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Set Your Criteria</h3>
+          <p>Choose your industry, budget range, target countries, and keywords. Save your search profile once — it works for you every day.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Get Daily Matches</h3>
+          <p>Every morning, receive a curated list of tenders matching your profile. New opportunities from all 50+ platforms in one feed.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Bid With Confidence</h3>
+          <p>Access translated documents, deadline reminders, and requirements summaries. Focus on writing winning proposals, not hunting for opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHO -->
+  <section class="for-who">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">Who It's For</div>
+        <h2 class="section-title">Built for teams that win big contracts</h2>
+      </div>
+      <div class="for-who-grid fade-in">
+        <div class="for-who-card">
+          <div class="emoji">&#127912;</div>
+          <h3>Creative & Branding Agencies</h3>
+          <p>Find government and institutional rebranding projects, visual identity contracts, and national campaign tenders worth $1M+.</p>
+        </div>
+        <div class="for-who-card">
+          <div class="emoji">&#128187;</div>
+          <h3>Digital & IT Companies</h3>
+          <p>Discover platform development, digital transformation, and e-governance projects from public institutions across Europe and beyond.</p>
+        </div>
+        <div class="for-who-card">
+          <div class="emoji">&#127909;</div>
+          <h3>Media & Production Studios</h3>
+          <p>Track video production, media planning, advertising campaigns, and event management tenders from government organizations worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Start finding tenders today</h2>
+        <p class="section-subtitle">One won tender pays for years of TenderScope.</p>
+      </div>
+      <div class="pricing-grid fade-in">
+        <div class="pricing-card">
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-price">$49<span>/mo</span></div>
+          <div class="pricing-desc">For freelancers and small teams exploring procurement</div>
+          <ul class="pricing-features">
+            <li>3 saved search profiles</li>
+            <li>Ukraine + EU sources</li>
+            <li>Daily email digest</li>
+            <li>Basic keyword search</li>
+            <li>30-day search history</li>
+          </ul>
+          <a href="#cta" class="btn btn-outline">Start Free Trial</a>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-name">Professional</div>
+          <div class="pricing-price">$149<span>/mo</span></div>
+          <div class="pricing-desc">For agencies actively bidding on international tenders</div>
+          <ul class="pricing-features">
+            <li>Unlimited search profiles</li>
+            <li>All 54 countries</li>
+            <li>Telegram + email alerts</li>
+            <li>AI-powered smart search</li>
+            <li>Auto-translate documents</li>
+            <li>Deadline tracker & calendar</li>
+          </ul>
+          <a href="#cta" class="btn btn-primary">Start Free Trial</a>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-name">Enterprise</div>
+          <div class="pricing-price">Custom</div>
+          <div class="pricing-desc">For large organizations with specific requirements</div>
+          <ul class="pricing-features">
+            <li>Everything in Professional</li>
+            <li>API access</li>
+            <li>Custom integrations</li>
+            <li>Dedicated account manager</li>
+            <li>Team collaboration tools</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#cta" class="btn btn-outline">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <div class="section-header section-header-center fade-in">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Common questions</h2>
+      </div>
+      <div class="faq-list fade-in">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What procurement platforms do you cover?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We aggregate data from 50+ platforms including ProZorro (Ukraine), EU TED (all 27 EU countries), UNGM (United Nations), World Bank, EBRD, and national portals in the UK, Poland, Germany, France, and many more. We add new sources every month.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Can I filter tenders by budget above $1 million?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes. You can set any minimum budget threshold. We automatically convert all currencies to your preferred one (USD, EUR, UAH, GBP) so you can compare tenders across countries with accurate, up-to-date exchange rates.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How does auto-translation work?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We use AI-powered translation to convert tender descriptions, requirements, and attached documents into your preferred language. This means a tender published in Polish, German, or French is instantly readable in English or Ukrainian. Translation quality is optimized for procurement terminology.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How often is the data updated?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We sync with all platforms multiple times per day. Most new tenders appear in TenderScope within hours of being published. Daily alert digests are sent every morning at 8:00 AM in your timezone.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Is there a free trial?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, every plan comes with a 14-day free trial. No credit card required. You get full access to all features in your chosen plan during the trial period.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Can I search specifically for creative/advertising tenders?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely. We support filtering by CPV codes (Common Procurement Vocabulary) relevant to creative industries: advertising, branding, graphic design, web development, video production, media planning, event management, PR services, and more. You can also combine these with free-text keywords.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="cta">
+    <h2>Stop searching. Start winning.</h2>
+    <p>Join agencies that use TenderScope to discover and win high-value contracts across 54 countries.</p>
+    <form class="cta-form" style="display: flex; gap: 12px; max-width: 480px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+      <input type="email" class="search-input" placeholder="Your work email" style="flex: 1; min-width: 240px;">
+      <button type="submit" class="btn btn-primary">Get Early Access</button>
+    </form>
+    <p style="font-size: 13px; color: var(--text-light); margin-top: 12px;">14-day free trial. No credit card required.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>TenderScope &mdash; Find high-value tenders worldwide.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.parentElement;
+        var answer = item.querySelector('.faq-answer');
+        var isOpen = item.classList.contains('open');
+
+        // close all
+        document.querySelectorAll('.faq-item').forEach(function(faq) {
+          faq.classList.remove('open');
+          faq.querySelector('.faq-answer').style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Scroll fade-in
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(function(el) {
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
