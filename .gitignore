@@ -3,8 +3,8 @@ Thumbs.db
 *.swp
 *.swo
 *~
+node_modules/
 
 # Slack Daily Summary
-slack-daily-summary/node_modules/
 slack-daily-summary/output/
 slack-daily-summary/.env
