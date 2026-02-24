@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dagelijks Overzicht — {{DATE_FORMATTED}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #F5F5F7;
+      --card-bg: #FFFFFF;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --text-tertiary: #AEAEB2;
+      --accent: #007AFF;
+      --green: #34C759;
+      --red: #FF3B30;
+      --amber: #FF9500;
+      --purple: #AF52DE;
+      --grey: #8E8E93;
+      --border: #E5E5EA;
+      --hover: #F2F2F7;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      --transition: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 32px;
+    }
+
+    .header-date {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .header-title {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+    }
+
+    /* Stats Bar */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .stat-card.accent .stat-value { color: var(--accent); }
+    .stat-card.green .stat-value { color: var(--green); }
+    .stat-card.amber .stat-value { color: var(--amber); }
+    .stat-card.purple .stat-value { color: var(--purple); }
+
+    /* Section */
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 4px;
+      margin-bottom: 10px;
+    }
+
+    .section-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-secondary);
+    }
+
+    .section-count {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      margin-left: auto;
+    }
+
+    /* Item Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+      cursor: default;
+    }
+
+    .item:last-child { border-bottom: none; }
+
+    .item:hover {
+      background: var(--hover);
+    }
+
+    /* Checkbox (for ACTION_ITEM) */
+    .item-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      margin-top: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .item-check:hover {
+      background: rgba(0, 122, 255, 0.1);
+    }
+
+    .item-check.checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .item-check.checked::after {
+      content: '';
+      width: 6px;
+      height: 10px;
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+
+    .item.completed .item-summary {
+      text-decoration: line-through;
+      color: var(--text-tertiary);
+    }
+
+    /* Category Dot (for non-action items) */
+    .item-dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 7px;
+    }
+
+    /* Item Content */
+    .item-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-summary {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text-primary);
+    }
+
+    .item-summary.high {
+      font-weight: 600;
+    }
+
+    .item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .item-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .item-tag-channel {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .item-tag-assignee {
+      color: var(--purple);
+      font-weight: 500;
+    }
+
+    .item-tag-deadline {
+      color: var(--red);
+      font-weight: 500;
+    }
+
+    .item-tag-priority {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .priority-high {
+      background: rgba(255, 59, 48, 0.1);
+      color: var(--red);
+    }
+
+    .priority-medium {
+      background: rgba(255, 149, 0, 0.1);
+      color: var(--amber);
+    }
+
+    /* Notion Button */
+    .item-actions {
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .btn-notion {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      font-family: var(--font);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-notion:hover {
+      background: var(--hover);
+      color: var(--text-secondary);
+    }
+
+    .btn-notion.sent {
+      color: var(--green);
+    }
+
+    .btn-notion svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Thread preview */
+    .item-thread {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .item-thread-toggle {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      padding: 0;
+      margin-top: 6px;
+    }
+
+    .item-thread-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .thread-replies {
+      display: none;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    .thread-replies.open { display: block; }
+
+    .thread-reply {
+      margin-bottom: 4px;
+    }
+
+    .thread-reply-user {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 0;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .container { padding: 24px 16px 64px; }
+      .header-title { font-size: 28px; }
+      .stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .stat-card { padding: 12px; }
+      .stat-value { font-size: 22px; }
+      .item { padding: 12px 14px; }
+      .item-actions { display: none; }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section {
+      animation: fadeIn 0.4s ease-out both;
+    }
+
+    .section:nth-child(2) { animation-delay: 0.05s; }
+    .section:nth-child(3) { animation-delay: 0.1s; }
+    .section:nth-child(4) { animation-delay: 0.15s; }
+    .section:nth-child(5) { animation-delay: 0.2s; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-date">{{DATE_WEEKDAY}} {{DATE_FORMATTED}}</div>
+      <h1 class="header-title">Dagelijks Overzicht</h1>
+    </header>
+
+    <div class="stats">
+      {{STATS_HTML}}
+    </div>
+
+    {{SECTIONS_HTML}}
+
+    <footer class="footer">
+      Gegenereerd op {{GENERATED_AT}} &middot; Slack + Claude AI
+    </footer>
+  </div>
+
+  <script>
+    // Checkbox toggle
+    document.querySelectorAll('.item-check').forEach(function(el) {
+      el.addEventListener('click', function() {
+        el.classList.toggle('checked');
+        el.closest('.item').classList.toggle('completed');
+      });
+    });
+
+    // Thread toggle
+    document.querySelectorAll('.item-thread-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var replies = btn.parentElement.querySelector('.thread-replies');
+        if (replies) {
+          replies.classList.toggle('open');
+          btn.textContent = replies.classList.contains('open')
+            ? 'Verberg thread'
+            : btn.dataset.label;
+        }
+      });
+    });
+
+    // Notion button (visual feedback only - actual push happens server-side)
+    document.querySelectorAll('.btn-notion').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btn.classList.add('sent');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Opgeslagen';
+        // Store in localStorage to remember state
+        var id = btn.dataset.id;
+        if (id) {
+          var saved = JSON.parse(localStorage.getItem('notion-saved') || '[]');
+          if (!saved.includes(id)) saved.push(id);
+          localStorage.setItem('notion-saved', JSON.stringify(saved));
+        }
+      });
+    });
+
+    // Restore Notion button states
+    (function() {
+      var saved = JSON.parse(localStorage.getItem('notion-saved') || '[]');
+      saved.forEach(function(id) {
+        var btn = document.querySelector('.btn-notion[data-id="' + id + '"]');
+        if (btn) {
+          btn.classList.add('sent');
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Opgeslagen';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+[
+  {
+    "channel": { "id": "C001", "name": "engineering" },
+    "messages": [
+      {
+        "id": "1740000000.000001",
+        "user": { "id": "U001", "name": "janedoe", "displayName": "Jane" },
+        "text": "Kun je de v2.1 hotfix deployen naar productie vandaag? Het is dringend.",
+        "timestamp": "1740000000.000001",
+        "threadReplies": [
+          {
+            "user": { "id": "U002", "name": "bob", "displayName": "Bob" },
+            "text": "Ik pak het op, wordt voor 15:00.",
+            "timestamp": "1740000200.000001"
+          }
+        ],
+        "reactions": [{ "name": "eyes", "count": 2 }]
+      },
+      {
+        "id": "1740000000.000002",
+        "user": { "id": "U003", "name": "alice", "displayName": "Alice" },
+        "text": "We hebben besloten om over te stappen naar PostgreSQL voor de nieuwe service. Migration plan volgt volgende week.",
+        "timestamp": "1740000000.000002",
+        "threadReplies": [],
+        "reactions": [{ "name": "+1", "count": 5 }]
+      },
+      {
+        "id": "1740000000.000003",
+        "user": { "id": "U002", "name": "bob", "displayName": "Bob" },
+        "text": "Heads up: de API rate limits worden per 1 maart aangepast. Zie docs voor details.",
+        "timestamp": "1740000000.000003",
+        "threadReplies": [],
+        "reactions": []
+      },
+      {
+        "id": "1740000000.000004",
+        "user": { "id": "U004", "name": "charlie", "displayName": "Charlie" },
+        "text": "Weet iemand of we al een staging environment hebben voor de nieuwe microservice?",
+        "timestamp": "1740000000.000004",
+        "threadReplies": [
+          {
+            "user": { "id": "U001", "name": "janedoe", "displayName": "Jane" },
+            "text": "Nog niet, staat op de roadmap voor Q2.",
+            "timestamp": "1740000400.000001"
+          }
+        ],
+        "reactions": []
+      },
+      {
+        "id": "1740000000.000005",
+        "user": { "id": "U001", "name": "janedoe", "displayName": "Jane" },
+        "text": "@bob Graag de PR #234 reviewen voor end of day. Bevat de auth fix die we nodig hebben voor de release.",
+        "timestamp": "1740000000.000005",
+        "threadReplies": [],
+        "reactions": []
+      }
+    ]
+  },
+  {
+    "channel": { "id": "C002", "name": "product" },
+    "messages": [
+      {
+        "id": "1740000000.000006",
+        "user": { "id": "U005", "name": "diana", "displayName": "Diana" },
+        "text": "@anna Kun je de client presentatie voorbereiden voor vrijdag? Graag de nieuwe features en de roadmap meenemen.",
+        "timestamp": "1740000000.000006",
+        "threadReplies": [],
+        "reactions": []
+      },
+      {
+        "id": "1740000000.000007",
+        "user": { "id": "U006", "name": "erik", "displayName": "Erik" },
+        "text": "NPS score van deze maand is 72, een stijging van 8 punten. Goed bezig team! Details in het dashboard.",
+        "timestamp": "1740000000.000007",
+        "threadReplies": [],
+        "reactions": [{ "name": "tada", "count": 8 }, { "name": "rocket", "count": 3 }]
+      },
+      {
+        "id": "1740000000.000008",
+        "user": { "id": "U005", "name": "diana", "displayName": "Diana" },
+        "text": "Budget voor Q2 marketing campagne is goedgekeurd. We kunnen door met het plan.",
+        "timestamp": "1740000000.000008",
+        "threadReplies": [],
+        "reactions": [{ "name": "+1", "count": 4 }]
+      }
+    ]
+  },
+  {
+    "channel": { "id": "C003", "name": "general" },
+    "messages": [
+      {
+        "id": "1740000000.000009",
+        "user": { "id": "U007", "name": "frank", "displayName": "Frank" },
+        "text": "Nieuwe collega Lisa begint maandag! Ze gaat bij het design team zitten.",
+        "timestamp": "1740000000.000009",
+        "threadReplies": [],
+        "reactions": [{ "name": "wave", "count": 12 }]
+      },
+      {
+        "id": "1740000000.000010",
+        "user": { "id": "U001", "name": "janedoe", "displayName": "Jane" },
+        "text": "Todo voor iedereen: vul je OKRs in voor Q2. Deadline is aanstaande vrijdag.",
+        "timestamp": "1740000000.000010",
+        "threadReplies": [],
+        "reactions": []
+      },
+      {
+        "id": "1740000000.000011",
+        "user": { "id": "U008", "name": "grace", "displayName": "Grace" },
+        "text": "Heeft iemand ervaring met het nieuwe Figma plugin? Ik loop tegen een bug aan bij het exporteren.",
+        "timestamp": "1740000000.000011",
+        "threadReplies": [
+          {
+            "user": { "id": "U007", "name": "frank", "displayName": "Frank" },
+            "text": "Ja, je moet eerst de cache clearen. Settings > Clear cache.",
+            "timestamp": "1740000600.000001"
+          },
+          {
+            "user": { "id": "U008", "name": "grace", "displayName": "Grace" },
+            "text": "Dat werkt, bedankt!",
+            "timestamp": "1740000800.000001"
+          }
+        ],
+        "reactions": []
+      }
+    ]
+  }
+]
